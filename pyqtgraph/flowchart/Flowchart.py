@@ -27,6 +27,7 @@ from .. import configfile as configfile
 from .. import dockarea as dockarea
 from . import FlowchartGraphicsView
 from .. import functions as fn
+from ..python2_3 import asUnicode as unicode
 
 def strDict(d):
     return dict([(str(k), v) for k, v in d.items()])
@@ -760,6 +761,10 @@ class FlowchartCtrlWidget(QtGui.QWidget):
     def select(self, node):
         item = self.items[node]
         self.ui.ctrlList.setCurrentItem(item)
+        
+    def clearSelection(self):
+        self.ui.ctrlList.selectionModel().clearSelection()
+
 
 
 class FlowchartWidget(dockarea.DockArea):
@@ -888,7 +893,10 @@ class FlowchartWidget(dockarea.DockArea):
             item = items[0]
             if hasattr(item, 'node') and isinstance(item.node, Node):
                 n = item.node
-                self.ctrl.select(n)
+                if n in self.ctrl.items:
+                    self.ctrl.select(n)
+                else:
+                    self.ctrl.clearSelection()
                 data = {'outputs': n.outputValues(), 'inputs': n.inputValues()}
                 self.selNameLabel.setText(n.name())
                 if hasattr(n, 'nodeName'):

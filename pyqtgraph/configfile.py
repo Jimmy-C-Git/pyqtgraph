@@ -15,6 +15,7 @@ from .pgcollections import OrderedDict
 from . import units
 from .python2_3 import asUnicode, basestring
 from .Qt import QtCore
+from .Qt import PyQt5
 from .Point import Point
 from .colormap import ColorMap
 GLOBAL_PATH = None # so not thread safe.
@@ -142,6 +143,7 @@ def parseString(lines, start=0):
             local['readConfigFile'] = readConfigFile
             local['Point'] = Point
             local['QtCore'] = QtCore
+            local['PyQt5'] = PyQt5
             local['ColorMap'] = ColorMap
             local['datetime'] = datetime
             # Needed for reconstructing numpy arrays
