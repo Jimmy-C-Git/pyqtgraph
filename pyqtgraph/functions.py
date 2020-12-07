@@ -475,7 +475,10 @@ def eq(a, b):
         if (hasattr(e, 'implements') and e.implements('MetaArray')):
             return e.asarray().all()
         else:
+            if hasattr(e,'mask'):
+                e.mask = np.zeros(e.shape)
             return e.all()
+        
     else:
         raise Exception("== operator returned type %s" % str(type(e)))
 
