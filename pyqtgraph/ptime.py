@@ -13,7 +13,11 @@ time = None
 
 def winTime():
     """Return the current time in seconds with high precision (windows version, use Manager.time() to stay platform independent)."""
-    return systime.clock() + START_TIME
+    if float(sys.version[0:3]) >= 3.8:
+        return systime.perf_counter() + START_TIME
+    else :
+        return systime.clock() + START_TIME
+    
     #return systime.time()
 
 def unixTime():
