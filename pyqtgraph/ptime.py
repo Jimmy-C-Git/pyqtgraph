@@ -21,7 +21,11 @@ def unixTime():
     return systime.time()
 
 if sys.platform.startswith('win'):
-    cstart = systime.clock()  ### Required to start the clock in windows
+    
+    if float(sys.version[0:3]) >= 3.8:
+        cstart = systime.perf_counter()
+    else :
+        cstart = systime.clock()  ### Required to start the clock in windows
     START_TIME = systime.time() - cstart
     
     time = winTime
